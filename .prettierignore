@@ -1,0 +1,14 @@
+node_modules
+.next
+dist
+package-lock.json
+.agents
+.local
+.env.local
+artifacts
+playwright-report
+test-results
+FILE-INVENTORY.txt
+docs
+AGENTS.md
+**/next-env.d.ts

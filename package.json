@@ -1,0 +1,50 @@
+{
+  "name": "nirvor-erp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.22.2 <25",
+    "npm": ">=11 <12"
+  },
+  "packageManager": "npm@11.6.1",
+  "workspaces": [
+    "packages/contracts",
+    "packages/database",
+    "packages/ui",
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "setup:local": "node scripts/setup-local.mjs",
+    "db:up": "docker compose --env-file .env.local up -d --wait",
+    "db:down": "docker compose --env-file .env.local down",
+    "db:migrate": "node --env-file-if-exists=.env.local packages/database/dist/src/cli.js",
+    "build:server": "npm run build -w @nirvor/contracts && npm run build -w @nirvor/database && npm run build -w @nirvor/ui && npm run build -w @nirvor/api",
+    "build": "npm run build:server && npm run build -w @nirvor/web",
+    "dev:web": "npm run dev -w @nirvor/web",
+    "dev:api": "node --env-file-if-exists=.env.local apps/api/dist/src/main.js",
+    "start:api": "node apps/api/dist/src/main.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "biome lint apps packages scripts tests playwright.config.ts",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test:unit": "node scripts/test.mjs unit",
+    "test:integration": "node --env-file-if-exists=.env.local scripts/test.mjs integration",
+    "test:contracts": "node scripts/test.mjs contract",
+    "test:boundaries": "node scripts/check-boundaries.mjs",
+    "test:e2e": "playwright test",
+    "test": "npm run test:unit && npm run test:contracts && npm run test:integration",
+    "security:secrets": "node scripts/check-secrets.mjs",
+    "security:dependencies": "npm audit --audit-level=moderate",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:boundaries && npm run security:secrets"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.7",
+    "@types/node": "24.19.2",
+    "typescript": "5.9.3",
+    "prettier": "3.10.1",
+    "@playwright/test": "1.65.0",
+    "@axe-core/playwright": "4.14.0"
+  }
+}

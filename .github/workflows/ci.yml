@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Create isolated local database credentials
+        run: npm run setup:local
+
+      - name: Start PostgreSQL
+        run: npm run db:up
+
+      - name: Check source and dependency boundaries
+        run: npm run check
+
+      - name: Audit dependencies
+        run: npm run security:dependencies
+
+      - name: Build applications
+        run: npm run build
+
+      - name: Run unit, contract, API, migration, and isolation tests
+        run: npm test
+
+      - name: Install browser runtime
+        run: npx playwright install --with-deps chromium
+
+      - name: Run desktop and mobile browser checks
+        run: npm run test:e2e
+
+      - name: Upload browser evidence on failure
+        if: failure()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        with:
+          name: browser-test-evidence
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7
+          if-no-files-found: ignore

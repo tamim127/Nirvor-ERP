@@ -1,0 +1,127 @@
+:root {
+  --background: #f5f7fa;
+  --surface: #ffffff;
+  --ink: #162b39;
+  --muted: #536571;
+  --line: #dce4e9;
+  --brand: #08735e;
+  --brand-strong: #075a4b;
+  --brand-soft: #e8f5ef;
+  --danger: #a52c39;
+  --radius: 16px;
+  --space: 8px;
+  --focus: #175cd3;
+  font-family: Arial, 'Nirmala UI', 'Noto Sans Bengali', sans-serif;
+  color: var(--ink);
+  background: var(--background);
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button,
+a,
+input,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+a {
+  color: var(--brand-strong);
+  text-underline-offset: 3px;
+}
+button,
+a {
+  touch-action: manipulation;
+}
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+.button {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  min-height: 44px;
+  padding: 11px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.button--primary {
+  color: white;
+  background: var(--brand);
+}
+.button--primary:hover {
+  background: var(--brand-strong);
+}
+.button--secondary {
+  color: var(--ink);
+  background: white;
+  border-color: var(--line);
+}
+.button:disabled {
+  cursor: not-allowed;
+  color: #5e6c75;
+  background: #e8edf0;
+  border-color: #dce4e9;
+}
+.card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 24px;
+}
+.badge {
+  display: inline-flex;
+  border-radius: 6px;
+  padding: 5px 9px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #495a66;
+  background: #edf1f5;
+}
+.badge--success {
+  color: #075a4b;
+  background: #e5f4ed;
+}
+.badge--warning {
+  color: #7b4b00;
+  background: #fff2d5;
+}
+.notice {
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #edf3fc;
+  color: #254f84;
+  line-height: 1.6;
+}
+.notice--error {
+  background: #fff0f1;
+  color: #932434;
+}
+.notice--success {
+  background: #e8f5ef;
+  color: #075a4b;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* biome-ignore lint/complexity/noImportantStyles: user motion preference must override component animation. */
+    animation: none !important;
+    /* biome-ignore lint/complexity/noImportantStyles: user motion preference must override component transition. */
+    transition: none !important;
+    /* biome-ignore lint/complexity/noImportantStyles: user motion preference must override smooth scrolling. */
+    scroll-behavior: auto !important;
+  }
+}

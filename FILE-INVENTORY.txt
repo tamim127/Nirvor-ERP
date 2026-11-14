@@ -1,0 +1,71 @@
+NIRVOR ERP - DOCUMENTATION FILE INVENTORY
+Updated: 2026-11-14
+
+FILES
+-----
+.agents/skills/nirvor-architecture-review/SKILL (2).md
+.agents/skills/nirvor-backend-engineer/SKILL (8).md
+.agents/skills/nirvor-database-engineer/SKILL (7).md
+.agents/skills/nirvor-devops-sre/SKILL (11).md
+.agents/skills/nirvor-erp-domain-analyst/SKILL (10).md
+.agents/skills/nirvor-integration-engineer/SKILL (12).md
+.agents/skills/nirvor-product-architect/SKILL (1).md
+.agents/skills/nirvor-release-review/SKILL (5).md
+.agents/skills/nirvor-saas-platform-engineer/SKILL (9).md
+.agents/skills/nirvor-secure-implementation/SKILL (3).md
+.agents/skills/nirvor-test-engineer/SKILL (4).md
+.agents/skills/nirvor-ui-ux/SKILL (6).md
+AGENTS.md
+docs/00-product/BUSINESS-MODEL-AND-PACKAGING.md
+docs/00-product/LOCALIZATION-AND-REGIONAL-REQUIREMENTS.md
+docs/00-product/OWNER-REQUIREMENTS-BASELINE.md
+docs/00-product/PERSONAS-AND-JOBS-TO-BE-DONE.md
+docs/00-product/PRODUCT-CHARTER.md
+docs/00-product/PRODUCT-REQUIREMENTS.md
+docs/01-architecture/API-AND-INTEGRATION-STRATEGY.md
+docs/01-architecture/DATABASE-ARCHITECTURE.md
+docs/01-architecture/EVENTS-AND-BACKGROUND-JOBS.md
+docs/01-architecture/MODULE-BOUNDARIES.md
+docs/01-architecture/MULTI-TENANCY-AND-ORGANIZATION-MODEL.md
+docs/01-architecture/PHASE-0-VALIDATION-PLAN.md
+docs/01-architecture/REALTIME-AND-WEBSOCKET-STRATEGY.md
+docs/01-architecture/SYSTEM-ARCHITECTURE.md
+docs/02-platform/FEATURE-ENTITLEMENT-ENGINE.md
+docs/02-platform/MODULE-CATALOG-AND-MARKETPLACE.md
+docs/02-platform/SUBSCRIPTION-AND-BILLING-ARCHITECTURE.md
+docs/02-platform/TEMPLATE-AND-CONFIGURATION-ENGINE.md
+docs/02-platform/USAGE-METERING-AND-QUOTAS.md
+docs/03-security/PRIVACY-AND-DATA-GOVERNANCE.md
+docs/03-security/SECURITY-ARCHITECTURE.md
+docs/03-security/THREAT-MODEL.md
+docs/04-engineering/adr/ADR-0000-template.md
+docs/04-engineering/adr/ADR-0001-phase-sequencing-and-validation.md
+docs/04-engineering/adr/ADR-0002-phase-1-engineering-foundation.md
+docs/04-engineering/ARCHITECTURE-DECISION-RECORDS.md
+docs/04-engineering/CODING-STANDARDS.md
+docs/04-engineering/ENGINEERING-CONSTITUTION.md
+docs/04-engineering/QUALITY-GATES-AND-DEFINITION-OF-DONE.md
+docs/04-engineering/TESTING-STRATEGY.md
+docs/05-operations/BACKUP-AND-DISASTER-RECOVERY.md
+docs/05-operations/DEPLOYMENT-AND-RELEASE-MANAGEMENT.md
+docs/05-operations/OBSERVABILITY-AND-INCIDENT-RESPONSE.md
+docs/05-operations/RELIABILITY-AND-SLO.md
+docs/05-operations/SCALABILITY-AND-PERFORMANCE.md
+docs/05-operations/LOCAL-DEVELOPMENT-RUNBOOK.md
+docs/06-design/DESIGN-SYSTEM-AND-UX-PRINCIPLES.md
+docs/07-delivery/DEVELOPMENT-ROADMAP.md
+docs/07-delivery/OPEN-DECISIONS.md
+docs/07-delivery/PHASE-0-ACCEPTANCE-CHECKLIST.md
+docs/07-delivery/PHASE-0-WORK-PLAN.md
+docs/07-delivery/PHASE-1-IMPLEMENTATION-PLAN.md
+docs/07-delivery/PHASE-1-VERIFICATION-REPORT.md
+FILE-INVENTORY.txt
+README.md
+
+TOTAL
+-----
+58 Markdown and inventory files, including this inventory.
+
+Phase 1 implementation is locally verified; owner acceptance and remote CI remain pending. Approval and verification status are recorded in docs/07-delivery/.
+Local skill files are listed by their actual names. They are not yet named SKILL.md; automatic discovery is not assumed.
+.agents is read-only in the current permission profile; skill files were not renamed.
