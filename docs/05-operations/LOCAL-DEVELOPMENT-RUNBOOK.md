@@ -21,9 +21,10 @@ npm run build
 npm test
 ```
 
-`setup:local` creates ignored `.env.local` and `.local/init.sql` files with generated local-only
-credentials. It does not print credential values. Do not commit, paste into tickets, or reuse these
-credentials outside this local environment. The command refuses to overwrite an existing
+`setup:local` creates an ignored `.env.local` file with generated local-only credentials. The
+committed PostgreSQL initialization script contains no credentials; Docker receives the generated
+values only through its local environment. Setup does not print credential values. Do not commit,
+paste into tickets, or reuse these credentials outside this local environment. The command refuses to overwrite an existing
 `.env.local`; rotate deliberately instead of silently replacing credentials.
 
 ## Run the applications

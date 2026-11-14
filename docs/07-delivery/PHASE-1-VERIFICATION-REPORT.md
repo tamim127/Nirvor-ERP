@@ -28,7 +28,7 @@ or production deployment was implemented.
 | `npm run lint` | Pass; 41 files, no findings after remediation |
 | `npm run typecheck` | Pass; contracts, database, UI, API and web |
 | `npm run test:boundaries` | Pass; 23 TypeScript files |
-| `npm run security:secrets` | Pass; 114 source files; tool explicitly is not a comprehensive secret audit |
+| `npm run security:secrets` | Pass; 115 source files; tool explicitly is not a comprehensive secret audit |
 | `npm run security:dependencies` | Pass; npm reported 0 vulnerabilities |
 | `npm run build` | Pass; all server packages and optimized Next.js production build |
 | `npm test` | Pass; 4 unit, 2 contract and 11 integration tests |
@@ -37,6 +37,14 @@ or production deployment was implemented.
 The final integration run verified safe HTTP behavior plus database denial without tenant context,
 cross-tenant read/write and forged ownership denial, cross-tenant reference rejection, pool reuse
 after commit/rollback/timeout/concurrency, and migration preservation/tamper/rollback/recovery.
+
+The first remote CI run (`43555912483`) failed at fresh PostgreSQL startup. Review identified a
+cross-platform permission defect: a generated mode-`0600` SQL file was bind-mounted for a different
+Linux container user. The fix replaced it with a committed credential-free initialization script;
+credentials are supplied through the local container environment and safely quoted by psql. A new
+temporary Compose project and volume reproduced fresh initialization successfully, its logs exposed
+no credential values, and the complete local checks/tests/build passed again. Replacement remote CI
+evidence is pending.
 
 ## Acceptance map
 
@@ -66,7 +74,8 @@ after commit/rollback/timeout/concurrency, and migration preservation/tamper/rol
 
 ## Known limitations and remaining work
 
-- GitHub Actions has not yet supplied remote clean-checkout evidence.
+- The first GitHub Actions run exposed and caused remediation of a Linux initialization defect;
+  replacement clean-checkout evidence is pending.
 - Product-owner milestone acceptance is required to close Phase 1.
 - ADR-0002 is proposed, not accepted.
 - Identity/authentication and server-derived membership are Phase 2 work.
