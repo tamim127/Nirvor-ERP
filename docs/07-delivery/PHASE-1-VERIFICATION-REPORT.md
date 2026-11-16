@@ -83,4 +83,29 @@ evidence is pending.
   deployment, backup/restore, SLO and load tests remain unresolved or later-phase work.
 - The local secret checker is a targeted pattern/ignore check, not a complete history or external
   secret-management audit.
+
+## 2026-11-16 Phase 1 remediation evidence
+
+The clean-checkout CI failure was reproduced from the workflow annotations: TypeScript could not
+resolve `@nirvor/contracts`, `@nirvor/database` and `@nirvor/ui` because their `types` export paths
+pointed to `dist` before any build step. The remediation keeps runtime `import` paths on compiled
+JavaScript while pointing TypeScript `types` exports to source files. Root `predev:web` and
+`pretest` lifecycle scripts build server workspaces before development/tests, so fresh installs do
+not depend on stale generated output.
+
+With the server `dist` directories temporarily moved to a verified ignored backup and restored after
+each run, the following passed on 2026-11-16:
+
+- `npm run typecheck`
+- `npm run check` (format, lint, typecheck, boundaries, secret scan)
+- `npm run build`
+- `npm test` (4 unit, 2 contract, 11 integration/RLS tests)
+- `npm run test:e2e` (4 desktop/mobile accessibility/navigation tests)
+
+The 12 project skill files were content-preservingly renamed to canonical `SKILL.md` paths. The
+secret checker now tolerates an unstaged rename by scanning only files present in the working tree;
+it does not skip staged/committed files. Next.js generated-file policy was documented in the local
+runbook: `next-env.d.ts` remains tracked and reviewed, while `apps/web/AGENTS.md` is ignored without
+deleting it. Phase 0 approval state and ADR statuses were not changed. Remote CI must still rerun
+against the remediation commit before this evidence is considered complete.
 - Local tests and screenshots do not establish production readiness.

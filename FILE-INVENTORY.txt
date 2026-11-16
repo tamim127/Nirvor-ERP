@@ -3,18 +3,18 @@ Updated: 2026-11-14
 
 FILES
 -----
-.agents/skills/nirvor-architecture-review/SKILL (2).md
-.agents/skills/nirvor-backend-engineer/SKILL (8).md
-.agents/skills/nirvor-database-engineer/SKILL (7).md
-.agents/skills/nirvor-devops-sre/SKILL (11).md
-.agents/skills/nirvor-erp-domain-analyst/SKILL (10).md
-.agents/skills/nirvor-integration-engineer/SKILL (12).md
-.agents/skills/nirvor-product-architect/SKILL (1).md
-.agents/skills/nirvor-release-review/SKILL (5).md
-.agents/skills/nirvor-saas-platform-engineer/SKILL (9).md
-.agents/skills/nirvor-secure-implementation/SKILL (3).md
-.agents/skills/nirvor-test-engineer/SKILL (4).md
-.agents/skills/nirvor-ui-ux/SKILL (6).md
+.agents/skills/nirvor-architecture-review/SKILL.md
+.agents/skills/nirvor-backend-engineer/SKILL.md
+.agents/skills/nirvor-database-engineer/SKILL.md
+.agents/skills/nirvor-devops-sre/SKILL.md
+.agents/skills/nirvor-erp-domain-analyst/SKILL.md
+.agents/skills/nirvor-integration-engineer/SKILL.md
+.agents/skills/nirvor-product-architect/SKILL.md
+.agents/skills/nirvor-release-review/SKILL.md
+.agents/skills/nirvor-saas-platform-engineer/SKILL.md
+.agents/skills/nirvor-secure-implementation/SKILL.md
+.agents/skills/nirvor-test-engineer/SKILL.md
+.agents/skills/nirvor-ui-ux/SKILL.md
 AGENTS.md
 docs/00-product/BUSINESS-MODEL-AND-PACKAGING.md
 docs/00-product/LOCALIZATION-AND-REGIONAL-REQUIREMENTS.md
@@ -67,5 +67,5 @@ TOTAL
 58 Markdown and inventory files, including this inventory.
 
 Phase 1 implementation is locally verified; owner acceptance and remote CI remain pending. Approval and verification status are recorded in docs/07-delivery/.
-Local skill files are listed by their actual names. They are not yet named SKILL.md; automatic discovery is not assumed.
-.agents is read-only in the current permission profile; skill files were not renamed.
+All local skill directories now use the canonical `SKILL.md` filename; original content and
+instructions were preserved during the content-neutral rename.

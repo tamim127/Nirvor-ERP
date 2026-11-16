@@ -47,7 +47,7 @@ For every open decision, record its owner, options, recommendation, evidence, an
 - Tenant/company cardinality is confirmed, but branch policy and cross-workspace membership are not: stop dependent security design until resolved.
 - RLS, authentication, quota races, billing and financial invariants need real validation; documentation cannot prove them.
 - Statutory rules require current authoritative sources and qualified review before implementation; this phase has not validated laws or provider capabilities.
-- Existing local skills have noncanonical filenames. Read them explicitly; do not assume discovery works. `.agents` is read-only in the current workspace permission profile, so renaming is not part of this documentation change.
+- Existing local skills use canonical `SKILL.md` filenames after a content-neutral remediation rename. Read the files explicitly and do not infer approval from skill discovery alone.
 
 ## Progress record
 

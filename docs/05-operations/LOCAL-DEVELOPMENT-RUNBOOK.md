@@ -66,6 +66,12 @@ npx playwright install chromium
 Generated browser reports, screenshots, local credentials, build output and test artifacts are
 ignored by Git.
 
+Next.js generated policy: `apps/web/next-env.d.ts` is a tracked framework-generated TypeScript
+reference file and may change when the pinned Next.js version changes; review its diff and commit it
+only with the related dependency/framework change. `apps/web/AGENTS.md` is local Next.js-generated
+agent guidance and is intentionally ignored. Never delete either file to hide a diff; inspect and
+preserve intentional changes.
+
 ## Database and migrations
 
 ```powershell

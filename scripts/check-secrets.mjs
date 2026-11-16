@@ -1,4 +1,5 @@
 import { execFileSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 
 const gitArguments = ['-c', `safe.directory=${process.cwd()}`];
@@ -18,6 +19,9 @@ for (const path of tracked) {
     findings.push(`${path}: environment file must not be tracked`);
 }
 for (const path of new Set(paths)) {
+  // During a content-preserving rename, the Git index may still list the old path.
+  // Scan only files that exist in the current worktree; staged/committed state is checked by Git.
+  if (!existsSync(path)) continue;
   if (!/\.(?:md|ts|tsx|mjs|json|sql|yaml|yml|txt)$/.test(path)) continue;
   const content = await readFile(path, 'utf8');
   const patterns = [
