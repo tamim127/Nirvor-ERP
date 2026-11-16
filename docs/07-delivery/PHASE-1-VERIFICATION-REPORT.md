@@ -106,6 +106,8 @@ The 12 project skill files were content-preservingly renamed to canonical `SKILL
 secret checker now tolerates an unstaged rename by scanning only files present in the working tree;
 it does not skip staged/committed files. Next.js generated-file policy was documented in the local
 runbook: `next-env.d.ts` remains tracked and reviewed, while `apps/web/AGENTS.md` is ignored without
-deleting it. Phase 0 approval state and ADR statuses were not changed. Remote CI must still rerun
-against the remediation commit before this evidence is considered complete.
+deleting it. Phase 0 approval state and ADR statuses were not changed. Remote GitHub Actions run
+[43846375173](https://github.com/tamim127/Nirvor-ERP/actions/runs/43846375173) completed successfully
+for remediation commit `104fbc8` on 2026-11-16. This verifies the clean-checkout workflow on the
+configured GitHub runner; it does not approve Phase 0 or establish production readiness.
 - Local tests and screenshots do not establish production readiness.

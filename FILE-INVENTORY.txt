@@ -66,6 +66,6 @@ TOTAL
 -----
 58 Markdown and inventory files, including this inventory.
 
-Phase 1 implementation is locally verified; owner acceptance and remote CI remain pending. Approval and verification status are recorded in docs/07-delivery/.
+Phase 1 implementation is locally and remotely verified; owner acceptance remains pending. Approval and verification status are recorded in docs/07-delivery/.
 All local skill directories now use the canonical `SKILL.md` filename; original content and
 instructions were preserved during the content-neutral rename.

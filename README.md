@@ -100,7 +100,7 @@ See `docs/07-delivery/DEVELOPMENT-ROADMAP.md` for the detailed roadmap.
 
 ## Current status
 
-**Status: Phase 1 implementation verified locally — owner milestone acceptance and remote CI pending**
+**Status: Phase 1 implementation verified locally and in remote CI — owner milestone acceptance pending**
 
 On 2026-11-13, the product owner explicitly authorized the bounded Phase 1 implementation and
 confirmed one company with multiple branches per customer workspace. On 2026-11-14, the local
