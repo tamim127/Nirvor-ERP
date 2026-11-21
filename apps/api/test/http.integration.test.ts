@@ -4,7 +4,7 @@ import { randomBytes } from 'node:crypto';
 import { Controller, Get, Post } from '@nestjs/common';
 import type { AddressInfo } from 'node:net';
 import { errorResponseSchema, healthResponseSchema, readConfiguration } from '@nirvor/contracts';
-import { createApp, PublicEndpoint } from '../src/app.js';
+import { createApp, PublicEndpoint, type AuthPort } from '../src/app.js';
 import type { SafeEvent } from '../src/controls.js';
 
 @Controller('test')
@@ -23,6 +23,7 @@ class TestController {
 async function fixture(
   overrides: Record<string, string> = {},
   probe: () => Promise<void> = async () => {},
+  auth?: AuthPort,
 ) {
   const config = readConfiguration({
     DATABASE_URL: `postgresql://test:${randomBytes(20).toString('hex')}@localhost/test`,
@@ -30,11 +31,122 @@ async function fixture(
     ...overrides,
   });
   const events: SafeEvent[] = [];
-  const app = await createApp(config, probe, (event) => events.push(event), [TestController]);
+  const app = await createApp(config, probe, (event) => events.push(event), [TestController], auth);
   await app.listen(0, '127.0.0.1');
   const address = app.getHttpServer().address() as AddressInfo;
   return { app, events, url: `http://127.0.0.1:${address.port}` };
 }
+
+test('login, server-derived session context and logout', async () => {
+  const tenantId = '11111111-1111-4111-8111-111111111111';
+  const branchId = '44444444-4444-4444-8444-444444444444';
+  const token = 'a'.repeat(64);
+  let revoked = false;
+  const auth: AuthPort = {
+    authenticate: async (email, password) =>
+      email === 'owner@example.com' && password === 'correct horse battery staple'
+        ? { userId: '22222222-2222-4222-8222-222222222222' }
+        : null,
+    createSession: async () => ({ token, expiresAt: new Date(Date.now() + 60_000) }),
+    resolveSession: async (candidate) =>
+      !revoked && candidate === token
+        ? { userId: '22222222-2222-4222-8222-222222222222', tenantIds: [tenantId] }
+        : null,
+    resolveContext: async (candidate, requestedTenant, requestedBranch) =>
+      !revoked &&
+      candidate === token &&
+      requestedTenant === tenantId &&
+      requestedBranch === branchId
+        ? { userId: '22222222-2222-4222-8222-222222222222', tenantId, branchId }
+        : null,
+    revokeSession: async (candidate) => {
+      if (candidate !== token) return false;
+      revoked = true;
+      return true;
+    },
+  };
+  const { app, url } = await fixture({}, async () => {}, auth);
+  try {
+    const invalid = await fetch(`${url}/auth/login`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email: 'owner@example.com', password: 'short' }),
+    });
+    assert.equal(invalid.status, 400);
+    const login = await fetch(`${url}/auth/login`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        email: 'owner@example.com',
+        password: 'correct horse battery staple',
+      }),
+    });
+    assert.equal(login.status, 200);
+    const cookie = login.headers.get('set-cookie');
+    assert.ok(cookie?.startsWith('nirvor_session='));
+    assert.equal(
+      (
+        await fetch(`${url}/test/private`, {
+          headers: { cookie: cookie?.split(';')[0] ?? '', 'x-role': 'owner' },
+        })
+      ).status,
+      403,
+      'A valid session and forged role must not authorize an undeclared action',
+    );
+    assert.equal(
+      (
+        await fetch(`${url}/auth/session`, {
+          headers: { cookie: 'nirvor_session=malformed' },
+        })
+      ).status,
+      401,
+    );
+    const session = await fetch(`${url}/auth/session`, {
+      headers: {
+        cookie: cookie?.split(';')[0] ?? '',
+        'x-tenant-id': tenantId,
+        'x-branch-id': branchId,
+      },
+    });
+    assert.equal(session.status, 200);
+    assert.deepEqual(await session.json(), {
+      userId: '22222222-2222-4222-8222-222222222222',
+      tenantIds: [tenantId],
+    });
+    assert.equal(
+      (
+        await fetch(`${url}/auth/session`, {
+          headers: {
+            cookie: cookie?.split(';')[0] ?? '',
+            'x-tenant-id': '33333333-3333-4333-8333-333333333333',
+            'x-branch-id': branchId,
+          },
+        })
+      ).status,
+      401,
+    );
+    const logout = await fetch(`${url}/auth/logout`, {
+      method: 'POST',
+      headers: { cookie: cookie?.split(';')[0] ?? '' },
+    });
+    assert.equal(logout.status, 200);
+    assert.match(logout.headers.get('set-cookie') ?? '', /Max-Age=0/);
+    assert.equal(
+      (
+        await fetch(`${url}/auth/session`, {
+          headers: {
+            cookie: cookie?.split(';')[0] ?? '',
+            'x-tenant-id': tenantId,
+            'x-branch-id': branchId,
+          },
+        })
+      ).status,
+      401,
+    );
+  } finally {
+    await app.close();
+  }
+});
 
 test('HTTP health, safe errors, request IDs, headers and deny-by-default', async () => {
   const { app, url, events } = await fixture();

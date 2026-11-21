@@ -17,6 +17,21 @@ export interface AuthorizedTenantContext {
   readonly tenantId: string;
 }
 
+export interface AuthorizedRequestContext extends AuthorizedTenantContext {
+  readonly userId: string;
+  readonly branchId: string;
+  readonly permissions: ReadonlySet<string>;
+}
+
+export const sessionTokenSchema = z.string().regex(/^[A-Za-z0-9_-]{32,256}$/);
+export const emailSchema = z.string().trim().toLowerCase().email().max(320);
+export const loginRequestSchema = z
+  .object({ email: emailSchema, password: z.string().min(12).max(256) })
+  .strict();
+export const sessionResponseSchema = z
+  .object({ userId: z.string().uuid(), tenantIds: z.array(z.string().uuid()) })
+  .strict();
+
 export const configurationSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   API_HOST: z.enum(['127.0.0.1', '0.0.0.0']).default('127.0.0.1'),

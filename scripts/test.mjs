@@ -13,7 +13,14 @@ async function walk(directory) {
     else if (entry.name.endsWith(`.${kind}.test.js`)) matches.push(path);
   }
 }
-for (const workspace of ['packages/contracts', 'packages/database', 'apps/api'])
+for (const workspace of [
+  'packages/contracts',
+  'packages/crm',
+  'packages/database',
+  'packages/modules',
+  'packages/saas',
+  'apps/api',
+])
   await walk(`${workspace}/dist`);
 if (!matches.length) throw new Error('No compiled tests found. Run npm run build:server first.');
 const result = spawnSync(process.execPath, ['--test', '--test-concurrency=1', ...matches], {

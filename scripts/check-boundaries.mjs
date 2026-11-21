@@ -4,16 +4,28 @@ import ts from 'typescript';
 
 const roots = {
   '@nirvor/contracts': 'packages/contracts',
+  '@nirvor/crm': 'packages/crm',
   '@nirvor/database': 'packages/database',
+  '@nirvor/modules': 'packages/modules',
+  '@nirvor/saas': 'packages/saas',
   '@nirvor/ui': 'packages/ui',
   '@nirvor/api': 'apps/api',
   '@nirvor/web': 'apps/web',
 };
 const allowed = {
   '@nirvor/contracts': [],
+  '@nirvor/crm': [],
   '@nirvor/database': ['@nirvor/contracts'],
+  '@nirvor/modules': [],
+  '@nirvor/saas': [],
   '@nirvor/ui': [],
-  '@nirvor/api': ['@nirvor/contracts', '@nirvor/database'],
+  '@nirvor/api': [
+    '@nirvor/contracts',
+    '@nirvor/crm',
+    '@nirvor/database',
+    '@nirvor/modules',
+    '@nirvor/saas',
+  ],
   '@nirvor/web': ['@nirvor/ui'],
 };
 const files = new Map();

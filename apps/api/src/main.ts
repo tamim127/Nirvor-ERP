@@ -1,6 +1,13 @@
 import { readConfiguration } from '@nirvor/contracts';
-import { createPool } from '@nirvor/database';
-import { createApp } from './app.js';
+import {
+  authenticateUser,
+  createPool,
+  createSession,
+  resolveSession,
+  revokeSession,
+  resolveAuthorizedContext,
+} from '@nirvor/database';
+import { createApp, type AuthPort } from './app.js';
 
 try {
   const config = readConfiguration(process.env);
@@ -9,9 +16,23 @@ try {
     max: config.DB_POOL_MAX,
     timeoutMs: config.DB_TIMEOUT_MS,
   });
-  const app = await createApp(config, async () => {
-    await pool.query('SELECT 1');
-  });
+  const auth: AuthPort = {
+    authenticate: (email, password) => authenticateUser(pool, email, password),
+    createSession: async (userId) => createSession(pool, userId),
+    resolveSession: (token) => resolveSession(pool, token),
+    resolveContext: (token, tenantId, branchId) =>
+      resolveAuthorizedContext(pool, token, tenantId, branchId),
+    revokeSession: (token) => revokeSession(pool, token),
+  };
+  const app = await createApp(
+    config,
+    async () => {
+      await pool.query('SELECT 1');
+    },
+    undefined,
+    [],
+    auth,
+  );
   await app.listen(config.API_PORT, config.API_HOST);
   console.log(
     JSON.stringify({ event: 'api.started', host: config.API_HOST, port: config.API_PORT }),

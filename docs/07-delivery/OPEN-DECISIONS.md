@@ -4,8 +4,8 @@ Updated: 2026-11-14. Record unresolved decisions here; never silently invent ans
 
 | ID | Decision | Owner | Status | Evidence or next action / blocking milestone |
 |---|---|---|---|---|
-| D-001 | First delivery workflows and validation customers within all-industry scope | Product owner | Open | Owner says all industries are included; first delivery ordering and customer validation remain undecided; Phase 0 |
-| D-002 | MVP/release module set and acceptance | Product owner | Open | Full candidate catalog retained; approve complete workflow slices and launch scope; Phase 0 |
+| D-001 | First delivery workflows and validation customers within all-industry scope | Product owner | Approved | On 2026-11-21 the owner approved all three offered Phase 5 workflows; implementation order is CRM, Sales, then Inventory. Validation customers remain to be identified before launch. |
+| D-002 | MVP/release module set and acceptance | Product owner | Open | CRM, Sales and Inventory are approved as the Phase 5 implementation set on 2026-11-21. Detailed workflow acceptance and the launch/release set remain open; no module is launch-ready merely because implementation started. |
 | D-003 | Tenant vs company relationship | Product owner | Approved | 2026-11-13 explicit answer: one company, multiple branches per workspace; [baseline OR-02](../00-product/OWNER-REQUIREMENTS-BASELINE.md); branch policy is D-021 |
 | D-004 | Initial pricing, packaging and limits | Product owner | Open | Feature-based pricing direction confirmed; amounts, meters, terms and quotas unapproved; Phase 0 policy baseline / Phase 3 detail |
 | D-005 | Signup and verification flow | Product owner | Open | Self-service versus assisted onboarding, abuse controls and invitation lifecycle; Phase 0 |

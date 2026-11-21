@@ -10,7 +10,10 @@
   "packageManager": "npm@11.6.1",
   "workspaces": [
     "packages/contracts",
+    "packages/crm",
     "packages/database",
+    "packages/modules",
+    "packages/saas",
     "packages/ui",
     "apps/api",
     "apps/web"
@@ -20,7 +23,7 @@
     "db:up": "docker compose --env-file .env.local up -d --wait",
     "db:down": "docker compose --env-file .env.local down",
     "db:migrate": "node --env-file-if-exists=.env.local packages/database/dist/src/cli.js",
-    "build:server": "npm run build -w @nirvor/contracts && npm run build -w @nirvor/database && npm run build -w @nirvor/ui && npm run build -w @nirvor/api",
+    "build:server": "npm run build -w @nirvor/contracts && npm run build -w @nirvor/crm && npm run build -w @nirvor/database && npm run build -w @nirvor/modules && npm run build -w @nirvor/saas && npm run build -w @nirvor/ui && npm run build -w @nirvor/api",
     "build": "npm run build:server && npm run build -w @nirvor/web",
     "dev": "npm run dev:web",
     "predev:web": "npm run build:server",
